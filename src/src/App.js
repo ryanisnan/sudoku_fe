@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 
@@ -23,7 +22,6 @@ class Tile extends Component {
         e.persist()
         this.setState({value: e.target.value})
         let url = 'http://localhost:8000/api/v1/moves/'
-        let last_value = this.state.last_value;
         fetch(url, {
             method: 'POST',
             body: JSON.stringify({
@@ -37,7 +35,6 @@ class Tile extends Component {
             }
         })
         .then(response => {
-            let data = response.json()
             // Handle a bad move
             if (response.status !== 201) {
                 e.target.value = ''
@@ -48,7 +45,7 @@ class Tile extends Component {
     render() {
         return (
             <div className="tile">
-                <input type="text" value={this.state.value} onChange={this.updateValue}></input>
+                <input type="text" value={this.state.value} onChange={this.updateValue} maxLength="1"></input>
             </div>
         );
     }
@@ -110,13 +107,13 @@ class ControlPanel extends Component {
         fetch(url, {
             method: 'POST'
         }).then(function() {
-
+            window.location.reload();
         })
     }
 
     render() {
         return (
-            <button onClick={this.resetGame}>Reset</button>
+            <button className="btn btn-primary reset-button" onClick={this.resetGame}>Reset</button>
         )
     }
 }
@@ -124,13 +121,14 @@ class ControlPanel extends Component {
 class App extends Component {
   render() {
     return (
-      <div className="App">
-          <h1>Sudoku</h1>
-          <Board className="board" />
-          <div>
-              <ControlPanel />
-          </div>
-      </div>
+        <div>
+            <div className="App">
+                <div className="board-wrapper">
+                    <Board className="board" />
+                </div>
+            </div>
+            <ControlPanel className="control-panel"/>
+        </div>
     );
   }
 }

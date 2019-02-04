@@ -13,6 +13,9 @@
       homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -26,16 +29,31 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Sudoku
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div id="root"></div>
+            </div>
+            <div class="col-sm-7">
+                <h2>Rules</h2>
+                <ul>
+                    <li>Each tile has a value between 1 and 9 (inclusively)</li>
+                    <li>Each tile must be unique with all other tiles in the same row, column, and 3x3 grid</li>
+                    <li>You have completed the puzzle when you have filled in all of the squares successfully</li>
+                    <li>There is only 1 fixed board currently</li>
+                    <li>This is a front-end application that talks to a back-end API</li>
+                    <li>Complete board can be seen <a href="http://elmo.sbs.arizona.edu/sandiway/sudoku/finalboard.gif">here</a></li>
+                </ul>
+                <h3>Source</h3>
+                <div><a href="https://github.com/ryanisnan/sudoku_fe"><i class="fab fa-github"></i> ryanisnan/sudoku_fe</a></div>
+                <div><a href="https://github.com/ryanisnan/sudoku_be"><i class="fab fa-github"></i> ryanisnan/sudoku_be</a></div>
+            </div>
+        </div>
+    </div>
   </body>
 </html>
