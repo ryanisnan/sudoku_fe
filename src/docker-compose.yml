@@ -1,0 +1,14 @@
+version: '3'
+services:
+  sudoku_fe:
+    container_name: sudoku_fe
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8010:3000"
+    networks:
+      - sudoku
+
+networks:
+  sudoku:
