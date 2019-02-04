@@ -8,16 +8,22 @@ class Tile extends Component {
         super(props)
 
         this.state = {
-            value: this.props.value
+            value: null
         }
 
         this.updateValue = this.updateValue.bind(this)
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({value: nextProps.value})
+    }
+
     updateValue(e) {
         console.log('You put in a ' + e.target.value)
+        e.persist()
         this.setState({value: e.target.value})
         let url = 'http://localhost:8000/api/v1/moves/'
+        let last_value = this.state.last_value;
         fetch(url, {
             method: 'POST',
             body: JSON.stringify({
@@ -30,12 +36,19 @@ class Tile extends Component {
                 'Content-Type': 'application/json'
             }
         })
+        .then(response => {
+            let data = response.json()
+            // Handle a bad move
+            if (response.status !== 201) {
+                e.target.value = ''
+            }
+        })
     }
 
     render() {
         return (
             <div className="tile">
-                <input type="text" value={this.props.value} onChange={this.updateValue}></input>
+                <input type="text" value={this.state.value} onChange={this.updateValue}></input>
             </div>
         );
     }
@@ -62,7 +75,7 @@ class Board extends Component {
     }
 
     renderTile(x, y, value) {
-        return <Tile key={x + '' + y} x={x} y={y} value={value}/>;
+        return <Tile key={x + '' + y} x={x} y={y} value={value} />;
     }
 
     render() {
@@ -77,8 +90,6 @@ class Board extends Component {
                 } else {
                     value = null
                 }
-                // console.log(this.state)
-                // console.log(value)
                 row.push(
                     this.renderTile(j, i, value)
                 )
@@ -93,11 +104,32 @@ class Board extends Component {
     }
 }
 
+class ControlPanel extends Component {
+    resetGame() {
+        let url = 'http://localhost:8000/api/v1/games/4/?reset=true'
+        fetch(url, {
+            method: 'POST'
+        }).then(function() {
+
+        })
+    }
+
+    render() {
+        return (
+            <button onClick={this.resetGame}>Reset</button>
+        )
+    }
+}
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-          <Board />
+          <h1>Sudoku</h1>
+          <Board className="board" />
+          <div>
+              <ControlPanel />
+          </div>
       </div>
     );
   }
